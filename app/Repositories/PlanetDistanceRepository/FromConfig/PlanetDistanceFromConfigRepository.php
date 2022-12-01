@@ -14,6 +14,6 @@ class PlanetDistanceFromConfigRepository implements PlanetDistanceRepositoryInte
          */
 
 
-        return new PlanetDistanceDto([]);
+        return new PlanetDistanceDto($from, $to, 0);
     }
 }

@@ -14,15 +14,15 @@ class HelloWorldController extends Controller
         private PlanetDistanceConversion          $planetDistanceConversion
     ) {}
 
-    public function __invoke(Request $request): HelloWorldResource
+    public function index(Request $request): HelloWorldResource
     {
         $distanceDto = $this->planetDistanceRepository->calculate(
             $request->get('from', 'Earth'),
             $request->get('to', 'Earth')
         );
 
-        $distanceToSpeed = $this->planetDistanceConversion->distanceToSpeed($distanceDto);
+        $distanceDto = $this->planetDistanceConversion->distanceToSpeed($distanceDto);
 
-        return new HelloWorldResource([$distanceDto, $distanceToSpeed]);
+        return new HelloWorldResource($distanceDto);
     }
 }
