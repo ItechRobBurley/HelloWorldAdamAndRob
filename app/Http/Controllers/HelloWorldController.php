@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\HelloWorldResource;
 use App\Repositories\PlanetDistanceRepository\PlanetDistanceRepositoryInterface;
 use App\Services\PlanetDistanceConversion;
 use Illuminate\Http\JsonResponse;
@@ -16,12 +17,12 @@ class HelloWorldController extends Controller
     {
     }
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): HelloWorldResource
     {
-        $distance = $this->planetDistanceRepository->calculate($request->get('from'), $request->get('to'));
+        $distanceDto = $this->planetDistanceRepository->calculate($request->get('from'), $request->get('to'));
 
-        $distanceToSpeed = $this->planetDistanceConversion->distanceToSpeed($distance);
+        $distanceToSpeed = $this->planetDistanceConversion->distanceToSpeed($distanceDto);
 
-        return response()->json($distanceToSpeed);
+        return new HelloWorldResource([$distanceDto, $distanceToSpeed]);
     }
 }
