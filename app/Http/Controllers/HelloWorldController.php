@@ -17,7 +17,7 @@ class HelloWorldController extends Controller
 
     public function __invoke(Request $request)
     {
-        $distance = $this->planetDistanceRepository->calculate($request->get('from'), $request->get('to');
+        $distance = $this->planetDistanceRepository->calculate($request->get('from'), $request->get('to'));
 
         $distanceToSpeed = $this->planetDistanceConversion->distanceToSpeed($distance);
 
