@@ -13,10 +13,14 @@ class PlanetDistanceFromConfigRepository implements PlanetDistanceRepositoryInte
         $from = strtolower($from);
         $to = strtolower($to);
 
-        $distance = config("planets.$from.$to") ?? config("planets.$to.$from") ?? null;
+        if ($from == $to) {
+            $distance = 0;
+        } else {
+            $distance = config("planets.$from.$to") ?? config("planets.$to.$from") ?? null;
 
-        throw_if(!$distance, new LostAPlanetMasterObiWanHasException("How Embarrassing"));
-
+            throw_if(!$distance, new LostAPlanetMasterObiWanHasException("How Embarrassing"));
+        }
+        
         return new PlanetDistanceDto($from, $to, $distance);
     }
 }
