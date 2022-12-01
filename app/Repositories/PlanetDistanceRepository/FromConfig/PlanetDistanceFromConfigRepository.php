@@ -20,7 +20,7 @@ class PlanetDistanceFromConfigRepository implements PlanetDistanceRepositoryInte
 
             throw_if(!$distance, new LostAPlanetMasterObiWanHasException("How Embarrassing"));
         }
-        
+
         return new PlanetDistanceDto($from, $to, $distance);
     }
 }
