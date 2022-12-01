@@ -3,17 +3,24 @@
 namespace App\Repositories\PlanetDistanceRepository\FromConfig;
 
 use App\DTOs\PlanetDistanceDto;
+use App\Exceptions\LostAPlanetMasterObiWanHasException;
 use App\Repositories\PlanetDistanceRepository\PlanetDistanceRepositoryInterface;
 
 class PlanetDistanceFromConfigRepository implements PlanetDistanceRepositoryInterface
 {
     public function calculate(string $from, string $to): PlanetDistanceDto
     {
-        /*
-         * ToDo: Convert shit here
-         */
+        $from = strtolower($from);
+        $to = strtolower($to);
 
+        if ($from == $to) {
+            $distance = 0;
+        } else {
+            $distance = config("planets.$from.$to") ?? config("planets.$to.$from") ?? null;
 
-        return new PlanetDistanceDto($from, $to, 0);
+            throw_if(!$distance, new LostAPlanetMasterObiWanHasException("How Embarrassing"));
+        }
+        
+        return new PlanetDistanceDto($from, $to, $distance);
     }
 }
