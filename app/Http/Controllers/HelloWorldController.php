@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HelloWorldRequest;
 use App\Http\Resources\HelloWorldResource;
 use App\Repositories\PlanetDistanceRepository\PlanetDistanceRepositoryInterface;
 use App\Services\PlanetDistanceConversion;
@@ -14,7 +15,7 @@ class HelloWorldController extends Controller
         private PlanetDistanceConversion          $planetDistanceConversion
     ) {}
 
-    public function index(Request $request): HelloWorldResource
+    public function index(HelloWorldRequest $request): HelloWorldResource
     {
         $distanceDto = $this->planetDistanceRepository->calculate(
             $request->get('from', 'Earth'),
