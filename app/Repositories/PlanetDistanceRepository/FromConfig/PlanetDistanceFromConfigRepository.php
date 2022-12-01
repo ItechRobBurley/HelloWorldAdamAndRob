@@ -10,10 +10,13 @@ class PlanetDistanceFromConfigRepository implements PlanetDistanceRepositoryInte
 {
     public function calculate(string $from, string $to): PlanetDistanceDto
     {
-        $distances = config("planets.$from") ?? config("planets.$to") ?? null;
-        $distance = $distances[$to] ?? $distances[$from] ?? null;
+        $from = strtolower($from);
+        $to = strtolower($to);
+
+        $distance = config("planets.$from.$to") ?? config("planets.$to.$from") ?? null;
+
         throw_if(!$distance, new LostAPlanetMasterObiWanHasException("How Embarrassing"));
 
-        return new PlanetDistanceDto([]);
+        return new PlanetDistanceDto($from, $to, $distance);
     }
 }
