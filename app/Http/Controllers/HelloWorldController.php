@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\PlanetDistanceRepository\PlanetDistanceRepositoryInterface;
 use App\Services\PlanetDistanceConversion;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class HelloWorldController extends Controller
@@ -15,7 +16,7 @@ class HelloWorldController extends Controller
     {
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $distance = $this->planetDistanceRepository->calculate($request->get('from'), $request->get('to'));
 
