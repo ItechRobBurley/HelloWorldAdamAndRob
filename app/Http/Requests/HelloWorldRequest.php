@@ -28,11 +28,13 @@ class HelloWorldRequest extends FormRequest
 
         return [
             'from' => [
+                'sometimes',
                 'required',
                 'string',
                 Rule::in($planets),
             ],
             'to' => [
+                'sometimes',
                 'required',
                 'string',
                 Rule::in($planets),
